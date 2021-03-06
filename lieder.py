@@ -77,6 +77,6 @@ for y in range(int(nrOfSongs)):
 
 
 
-stickCopy()
+stickCopy(path, datum + " - " + name)
 
 

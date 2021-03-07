@@ -5,11 +5,25 @@ import shutil
 import array
 # from py.stickCopy import *
 from py.coloredInput import *
+import winsound
+import time
+
 
 
 # Paths defined
 plansPath = ".sermon_plan/"
 songsPath = "_Lieder_Paket_03.2021/"
+
+printYellow('┌───────────────────────────────────────────────────────────────────────────────────────┐')
+printYellow('|                                                                                       |')
+printYellow('|                                        QUICKFIND                                      |')
+printYellow('|                                   für Gemeindelieder                                  |')
+printYellow('|                                                                                       |')
+printYellow('|                               Entwickelt von Gábor Juhász                             |')
+printYellow('|                                                                                       |')
+printYellow('|                               Gemeinde Bremen Mitte © 2021                            |')
+printYellow('|                                                                                 v1.0  |')
+printYellow('└───────────────────────────────────────────────────────────────────────────────────────┘')
 
 
 
@@ -84,8 +98,6 @@ for y in range(int(nrOfSongs)):
 
 
 
-# test
-
 def stickCopy(fromDir, dirName):
 
     stick = colorInput("Willst Du die Dateien auf einem Stick kopieren? (j/n)") 
@@ -107,8 +119,27 @@ def stickCopy(fromDir, dirName):
         # stickCopy()
 
 
-# 
 
 stickCopy(path, datum + " - " + name)
+
+
+# Play Signal Tone if finished
+filename = 'src/Alarm03.wav'
+winsound.PlaySound(filename, winsound.SND_FILENAME)
+
+
+
+# Countdown before closing
+i = 5
+
+def countdown_text():
+    print("Das Fenster schließst sich in " + str(i) + " Sekunden.", end="\r" )
+
+while i != 0:
+    countdown_text()
+    i -= 1
+    time.sleep(1)
+    countdown_text()
+
 
 

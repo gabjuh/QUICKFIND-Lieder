@@ -30,4 +30,8 @@ def printRed(txt):
     print(colored(txt, 'red'))
 
 
+def printYellow(txt):
+    print(colored(txt, 'yellow'))
+
+
 

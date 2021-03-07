@@ -1,8 +1,10 @@
+from distutils.dir_util import copy_tree
 import os
 import glob
 import shutil
 import array
-from py.stickCopy import *
+# from py.stickCopy import *
+from py.coloredInput import *
 
 
 # Paths defined
@@ -12,8 +14,11 @@ songsPath = "_Lieder_Paket_03.2021/"
 
 
 # Ask for Date and Fame for creating a folder
-datum = input("Datum: (JJJJ.MM.TT) ")
-name = input("Name des Predigers: ")
+# datum = input('Datum (JJJJ.MM.TT): ')
+datum = colorInput('Datum (JJJJ.MM.TT): ')
+
+# name = input("Name des Predigers: ")
+name= colorInput('Name des Predigers: ')
 
 
 
@@ -23,14 +28,15 @@ path = plansPath + datum + " - " + name
 try:
     os.mkdir(path)
 except OSError:
-    print ("Ordner wurde '%s' nicht angelegt." % path)
+    printRed ("Ordner wurde '%s' nicht angelegt." % path)
 else:
-    print ("Ordner wurde erstellt '%s' ." % path)
+    printGreen ("Ordner wurde erstellt '%s' ." % path)
 
 
 
 # Get the numbers of Songs
-nrOfSongs = input("Anzahl von Lieder: ")
+# nrOfSongs = input("Anzahl von Lieder: ")
+nrOfSongs = colorInput("Anzahl von Lieder: ")
 
 
 
@@ -40,7 +46,8 @@ for y in range(int(nrOfSongs)):
 
     # Finding Files
     files = []
-    songNr = input("Nummer des %s. Liedes (XXX): " % int(y + 1))
+    # songNr = input("Nummer des %s. Liedes (XXX): " % int(y + 1))
+    songNr = colorInput("Nummer des %s. Liedes (XXX): " % int(y + 1))
 
     # MP3
     mp3Matches = glob.glob(songsPath + songNr + "*.mp3")
@@ -50,7 +57,7 @@ for y in range(int(nrOfSongs)):
         
 
     # Loop for printing found files
-    print("Folgende Dateien wurden gefunden:")
+    printGreen("Folgende Dateien wurden gefunden:")
     for z in range(0, len(mp3Matches)):
         print(mp3Matches[z])
 
@@ -62,7 +69,7 @@ for y in range(int(nrOfSongs)):
         
         shutil.copyfile(mp3Matches[b], path + "/" + str(y + 1) + " - " + fileName)
 
-        print("Datei wurde kopiert: " + fileName + ",\nBefindet sich hier: " + path)
+        printGreen("Datei wurde kopiert: " + fileName + ",\nBefindet sich hier: " + path)
         
 
 
@@ -72,10 +79,35 @@ for y in range(int(nrOfSongs)):
         
         shutil.copyfile(pptxMatches[b], path + "/" + str(y + 1) + " - " + fileName)
 
-        print("Datei wurde kopiert: " + fileName + ",\nBefindet sich hier: " + path)
+        printGreen("Datei wurde kopiert: " + fileName + ",\nBefindet sich hier: " + path)
         
 
 
+
+# test
+
+def stickCopy(fromDir, dirName):
+
+    stick = colorInput("Willst Du die Dateien auf einem Stick kopieren? (j/n)") 
+    
+    if stick == "j":
+        drive = colorInput("Aktueller Laufwerksbuchstabe: ")
+        
+        toDir = drive + ":/.temp/.agbm/_predigt_plaene/" + dirName
+    
+        copy_tree(fromDir, toDir)
+        printGreen("Wurde erfolgreich kopiert.")
+        printGreen("Danke für die Nutzung des Programms!")
+        return
+    elif stick == "n":
+        printGreen("Danke für die Nutzung des Programms!")
+        return
+    else:
+        printRed("Falsche angabe, manuelle Kopierung wird nötig. Bis zum nächsten Mal!")
+        # stickCopy()
+
+
+# 
 
 stickCopy(path, datum + " - " + name)
 

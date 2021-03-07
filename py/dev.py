@@ -1,13 +1,19 @@
-def stickCopy():
-    stick = input("Willst Du die Dateien auf einem Stick kopieren? (j/n)") 
+from colorama import init
+from colorama import Fore as F
+from colorama import Back as B
+from colorama import Style
+from termcolor import colored
 
-    if stick == "j":
-        print("Kopieren")
-    elif stick == "n":
-        print("Danke für die Nutzung des Programms!")
-    else:
-        print("Falsche angabe.")
-        stickCopy()
+# def color(fore='', back='', text=''):
+#     return f'{fore}{back}{text}{Style.RESET_ALL}'
 
+# print(color(F.GREEm, B.BLUE, 'Hello!'))
 
-stickCopy()
+init()
+
+print(F.YELLOW + '?: ' + Style.RESET_ALL, end="")
+word = input()
+
+print(colored('BLABLA', 'green'))
+print(colored('BLABLA', 'red'))
+

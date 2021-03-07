@@ -1,2 +1,7 @@
 .sermon_plan
 _Lieder_Paket_03.2021
+__pycache__/
+py/__pycache__/
+
+py/test.py
+py/dev.py

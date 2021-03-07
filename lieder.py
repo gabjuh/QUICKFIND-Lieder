@@ -46,7 +46,9 @@ def prompt(p=promptText):
 def menu():
     printYellow("                       1) QUICKFIND starten\n")
     printYellow("                       2) Menü erneut abrufen\n")
-    printYellow("                       3) Info\n")
+    printYellow("                       3) #Info\n")
+    printYellow("                       4) #Liste den vorhandenen Liedern\n")
+    printYellow("                       5) #HTML Gen\n")
     printYellow("                       x) Exit\n")
     prompt()
     # analysis(command)
@@ -56,6 +58,8 @@ def analysis(c):
     if c == "x":
         # Abschiedtext, countdown
         exit()
+    elif c == "":
+        prompt()
     elif c == "1":
         printYellow('┌───────────────────────────────────────────────────────────────────────────────────────┐')
         printYellow('|                                    Let\'s QUICKFIND!                                   |')
@@ -67,7 +71,7 @@ def analysis(c):
         printYellow("INFOTEXT FOLGT")
         prompt()
     else:
-        printRed("Falsche Angabe, bitte noch einmal versuchen!")
+        printRed("Falsche Angabe, bitte noch einmal versuchen!\n")
         prompt()
 
 
@@ -77,16 +81,17 @@ menu()
 
 
 
-# Ask for Date and Fame for creating a folder
-
+# Ask for Date and Name for creating a folder
 def setDatum():
-    datum = colorInput('Datum von dem Predigt (TT.MM.JJJJ): ')
+    datum = colorInput(promptText + ' Datum von dem Predigt (TT.MM.JJJJ): ')
     checkDatum(datum)
     return datum
 
 def checkDatum(d):
-    errorMessage = "Bitte auf dem Format aufpassen: TT.MM.JJJJ, Beispiel: 01.01.2021"
-    if len(d) != 10:
+    errorMessage = "Bitte auf dem Format aufpassen: TT.MM.JJJJ, Beispiel: 01.01.2021\n"
+    if d == "":
+        setDatum()
+    elif len(d) != 10:
         printRed(errorMessage)
         setDatum() 
     elif d[2] != ".":
@@ -95,24 +100,28 @@ def checkDatum(d):
     elif d[5] != ".":
         printRed(errorMessage)
         setDatum() 
+    
    
 
 datum = str(setDatum())
 
 
-name = colorInput('Name des Predigers: ')
+name = colorInput(promptText + ' Name des Predigers: ')
 
 
 
 # Creating Folder
-path = targetPath + datum + " - " + name
+day = datum[0:2]
+month = datum[3:5]
+year = datum[6:]
+path = targetPath + year + "." + month + "." + day + " - " + name
 
 try:
     os.mkdir(path)
 except OSError:
-    printRed ("Ordner wurde '%s' nicht angelegt." % path)
+    printRed ("Ordner wurde '%s' nicht angelegt.\n" % path)
 else:
-    printGreen ("Ordner wurde erstellt '%s' ." % path)
+    printGreen ("Ordner wurde erstellt '%s' .\n" % path)
 
 
 

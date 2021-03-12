@@ -15,16 +15,16 @@ targetPath = ".sermon_plan/"
 sourcePath = "_Lieder_Paket_03.2021/"
 
 
-printYellow('┌───────────────────────────────────────────────────────────────────────────────────────┐')
-printYellow('|                                                                                       |')
-printYellow('|                                        QUICKFIND                                      |')
-printYellow('|                                   für Gemeindelieder                                  |')
-printYellow('|                                                                                       |')
-printYellow('|                               Entwickelt von Gábor Juhász                             |')
-printYellow('|                                                                                       |')
-printYellow('|                              © Gemeinde Bremen Mitte - 2021                           |')
-printYellow('|                                                                                 v1.0  |')
-printYellow('└───────────────────────────────────────────────────────────────────────────────────────┘\n\n')
+printYellow(' ┌──────────────────────────────────────────────────────────────────────────────────────┐')
+printYellow(' |                                                                                      |')
+printYellow(' |                                       QUICKFIND                                      |')
+printYellow(' |                                  für Gemeindelieder                                  |')
+printYellow(' |                                                                                      |')
+printYellow(' |                              Entwickelt von Gábor Juhász                             |')
+printYellow(' |                                                                                      |')
+printYellow(' |                             © Gemeinde Bremen Mitte - 2021                           |')
+printYellow(' |                                                                                v1.0  |')
+printYellow(' └──────────────────────────────────────────────────────────────────────────────────────┘\n\n')
 
 printYellow("                Hallo,\n")
 printYellow("                mit dem Tool kannst Du alle vorgegebene Lieder innerhalb")
@@ -57,7 +57,8 @@ def menu():
 def analysis(c):
     if c == "x":
         # Abschiedtext, countdown
-        exit()
+        # exit()
+        exitQF()
     elif c == "":
         prompt()
     elif c == "1":
@@ -74,6 +75,30 @@ def analysis(c):
         printRed("Falsche Angabe, bitte noch einmal versuchen!\n")
         prompt()
 
+
+# Countdown before closing
+
+def securityQuestion():
+    return colorInput("Möchtest du QUICKFIND wirklich schließen? (j/n)")
+
+def exitQF(i = 3, sq = True):
+
+    if sq == True:
+        sq = securityQuestion()
+
+        if sq == "j":
+            printYellow("Es war schön dich wieder zu sehen! :-)")
+            i = 5
+            def countdown_text():
+                print("Das Fenster schließst sich automatisch in " + str(i) + " Sekunden.", end="\r" )
+            while i != 0:
+                i -= 1
+                time.sleep(1)
+                countdown_text()
+    
+            exit()
+        else:
+            prompt()
 
 menu()        
 
@@ -114,7 +139,8 @@ name = colorInput(promptText + ' Name des Predigers: ')
 day = datum[0:2]
 month = datum[3:5]
 year = datum[6:]
-path = targetPath + year + "." + month + "." + day + " - " + name
+datum = year + "." + month + "." + day
+path = targetPath + datum + " - " + name
 
 try:
     os.mkdir(path)
@@ -137,6 +163,18 @@ for y in range(int(nrOfSongs)):
     # Finding Files
     files = []
     songNr = colorInput("Nummer des %s. Liedes (XXX): " % int(y + 1))
+    errorMessage = "Die Nummer muss mit mindestens 3 Charaktern angegeben, Beispiel: 015"
+
+    if len(songNr) < 3:
+        printYellow(errorMessage)
+        # prompt()
+    # elif songNr == "x":
+        # exitProzess = colorInput("Willst du es wirklich abbrechen? (j/n)")
+        # if exitProzess == "j"
+
+
+        # printRed("Prozess wurde a")
+        # prompt
 
     # MP3
     mp3Matches = glob.glob(sourcePath + songNr + "*.mp3")
@@ -204,17 +242,8 @@ winsound.PlaySound(filename, winsound.SND_FILENAME)
 
 
 
-# Countdown before closing
-i = 5
 
-def countdown_text():
-    print("Das Fenster schließst sich in " + str(i) + " Sekunden.", end="\r" )
 
-while i != 0:
-    countdown_text()
-    i -= 1
-    time.sleep(1)
-    countdown_text()
-
+exitQF(5, False)
 
 

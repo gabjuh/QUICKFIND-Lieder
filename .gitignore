@@ -2,6 +2,8 @@
 _Lieder_Paket_03.2021
 __pycache__/
 py/__pycache__/
+test/
+dev/
 
 py/test.py
 py/dev.py
